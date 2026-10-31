@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: startup-simulator
+    runtime: node
+    plan: free
+    region: oregon
+    branch: codex/web-release
+    buildCommand: npm test
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
