@@ -3,7 +3,7 @@ async function send(path,payload,timeout){
  try{const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(payload),signal:controller.signal});
   let data;try{data=await response.json();}catch{return {ok:false,error:'服务正在启动或返回异常，请稍后重试。'};}
   return data;
- }catch(error){return {ok:false,error:error.name==='AbortError'?'AI 请求超时，请稍后重试；当前进度已保留。':'网络连接失败。你可以继续基础剧情，或联网后重试。'};}
+ }catch(error){return {ok:false,error:error.name==='AbortError'?'AI 请求超时，请稍后重试；当前进度已保留。':'网络连接失败。请联网后重试，当前进度已保留。'};}
  finally{clearTimeout(timer);}
 }
 if(!window.desktop)window.desktop={

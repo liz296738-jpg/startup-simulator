@@ -4,8 +4,8 @@ import {createDIYGame} from '../src/engine.mjs';
 test('web serves only public assets and never exposes server files',async()=>{
  const server=createWebServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${server.address().port}`;
  try{
-  for(const url of ['/','/src/app.mjs','/src/styles.css','/manifest.webmanifest','/api/health'])assert.equal((await fetch(base+url)).status,200,url);
-  for(const url of ['/server.cjs','/ai.cjs','/director.cjs','/.git/config','/tests/server.test.mjs'])assert.equal((await fetch(base+url)).status,404,url);
+  for(const url of ['/','/src/app.mjs','/src/styles.css','/src/access.mjs','/src/access.css','/manifest.webmanifest','/api/health'])assert.equal((await fetch(base+url)).status,200,url);
+  for(const url of ['/server.cjs','/ai.cjs','/director.cjs','/access.cjs','/.env','/.git/config','/tests/server.test.mjs'])assert.equal((await fetch(base+url)).status,404,url);
   assert.match((await fetch(base)).headers.get('content-security-policy'),/connect-src 'self'/);
  }finally{await new Promise(r=>server.close(r));}
 });
