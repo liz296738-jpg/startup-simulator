@@ -43,3 +43,23 @@ API Key 只保留在玩家页面的运行内存里；刷新或关闭页面后需
 
 ## 验证
 运行 `npm test`，覆盖20个剧本、100例来源、DIY输入、资金结算、剧情结构与缓存、自拟行动、旧存档兼容和公开接口边界。
+
+## 架构与修改边界
+
+```text
+浏览器界面
+  app.mjs                     导航、交互与当前局面
+  view-home/library/journal/review.mjs  各屏幕模板
+  ui-kit.mjs / styles.css      公共视觉组件与样式
+       │
+  engine.mjs                  纯经营结算与存档校验
+  content / case-expansion / scenario-expansion.mjs  内容数据
+  diy.mjs / story-schema.mjs   DIY资料与AI剧情契约
+       │
+  platform.mjs → server.cjs    同源网络边界与资源服务
+                    ├ ai.cjs        会议桌对话
+                    └ director.cjs  剧情和自拟行动
+                         → DeepSeek 官方接口
+```
+
+新增案例不需要修改服务器；调整经营规则不依赖模型提示词；更换页面模板不触碰结算；AI服务异常不会影响离线经营。页面模板显式接收所需状态，服务器不参与浏览器存档持久化。存档结构与AI响应经过独立校验，避免文本生成直接修改财务。

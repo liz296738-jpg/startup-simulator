@@ -1,5 +1,5 @@
 const CACHE='startup-simulator-0.2.0';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon.svg','/icon-192.png','/icon-512.png','/apple-touch-icon.png','/src/styles.css','/src/platform.mjs','/src/app.mjs','/src/content.mjs','/src/case-expansion.mjs','/src/scenario-expansion.mjs','/src/engine.mjs','/src/context.mjs','/src/diy.mjs','/src/story-schema.mjs'];
+const FILES=['/','/index.html','/manifest.webmanifest','/icon.svg','/icon-192.png','/icon-512.png','/apple-touch-icon.png','/src/ui-kit.mjs','/src/view-home.mjs','/src/view-library.mjs','/src/view-journal.mjs','/src/view-review.mjs','/src/styles.css','/src/platform.mjs','/src/app.mjs','/src/content.mjs','/src/case-expansion.mjs','/src/scenario-expansion.mjs','/src/engine.mjs','/src/context.mjs','/src/diy.mjs','/src/story-schema.mjs'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES))));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('startup-simulator-')&&k!==CACHE).map(k=>caches.delete(k))))));
 self.addEventListener('fetch',event=>{
