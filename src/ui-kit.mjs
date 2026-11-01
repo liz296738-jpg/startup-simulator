@@ -5,4 +5,3 @@ export const money=v=>`${Number(v).toFixed(1)}`;
 export function heading(eyebrow,title,description,actions=''){return `<div class="page-heading"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${description}</p></div>${actions}</div>`;}
 
 export function empty(title,text,button='开始新的创业',action='home'){return `<div class="empty-state">${icon('flag')}<h2>${title}</h2><p>${text}</p><button class="button primary" data-nav="${action}">${button} ${icon('arrow')}</button></div>`;}
-
