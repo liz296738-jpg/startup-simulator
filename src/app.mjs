@@ -4,7 +4,7 @@ import {renderLibrary,renderCaseCards,selectCases,renderPagination} from './view
 import {renderJournal} from './view-journal.mjs';
 import {renderReview} from './view-review.mjs';
 import './platform.mjs';
-import {accessStatus,accessRequest,refreshAccess,accessDate,accessBanner} from './access.mjs';
+import {accessStatus,accessRequest,refreshAccess,accessDate,accessBanner,purchaseLink} from './access.mjs';
 import {cases,scenarios} from './content.mjs';
 import {createGame,getEvent,forecast,priorities,endings,validateSave,createDIYGame,scenarioFor,getPriorities,attachStoryEvent,continueDIY} from './engine.mjs';
 import {buildGameContext} from './context.mjs';
@@ -156,7 +156,7 @@ async function submitDecision(decision){
 }
 function activation(message=''){
  const state=accessStatus();
- openModal(`<div class="eyebrow">YOUR NEXT 30 DAYS</div><h2>${state?.active?'你的创业月卡':'激活 30 天创业月卡'}</h2><p class="modal-intro">${state?.active?`有效期至 ${accessDate(state.expiresAt)}（北京时间）。有效期内不限经营回合。`:'免费体验共 3 回合。激活后可在 30 天内反复开局、经营预设剧本和 DIY 公司。'}</p>${message?`<p class="activation-notice">${escape(message)}</p>`:''}<form id="activation-form"><label class="field-label" for="activation-code">卖家发给你的当天激活码</label><input id="activation-code" class="activation-code" maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="输入激活码" required><p class="field-hint">请按北京时间在领码当天激活，并使用常用浏览器。月卡状态保存在当前浏览器，导入存档不会导入月卡。</p><div id="activation-error" class="inline-error" role="alert"></div><button class="button primary activation-submit" type="submit">激活月卡，继续创业 ${icon('arrow')}</button></form><div class="activation-details"><p>一个回合＝执行一次经营决策并完成当月结算；浏览案例、创建公司和预览行动不扣回合。</p><p>AI 仍需填写你自己的 DeepSeek API Key，API 费用由你的账户承担。激活与推进回合需要联网。</p><p>请保留当前浏览器的数据，勿用无痕模式。换设备或清理数据后，请联系卖家处理。</p></div>`);
+ openModal(`<div class="eyebrow">YOUR NEXT 30 DAYS</div><h2>${state?.active?'你的创业月卡':'激活 30 天创业月卡'}</h2><p class="modal-intro">${state?.active?`有效期至 ${accessDate(state.expiresAt)}（北京时间）。有效期内不限经营回合。`:'免费体验共 3 回合。激活后可在 30 天内反复开局、经营预设剧本和 DIY 公司。'}</p>${message?`<p class="activation-notice">${escape(message)}</p>`:''}${!state?.active?`<div class="activation-purchase"><p>还没有激活码？前往小红书购买月卡，收到自动发货的当天码后，回到这里激活。</p>${purchaseLink()}</div>`:''}<form id="activation-form"><label class="field-label" for="activation-code">卖家发给你的当天激活码</label><input id="activation-code" class="activation-code" maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="输入激活码" required><p class="field-hint">请按北京时间在领码当天激活，并使用常用浏览器。月卡状态保存在当前浏览器，导入存档不会导入月卡。</p><div id="activation-error" class="inline-error" role="alert"></div><button class="button primary activation-submit" type="submit">激活月卡，继续创业 ${icon('arrow')}</button></form><div class="activation-details"><p>一个回合＝执行一次经营决策并完成当月结算；浏览案例、创建公司和预览行动不扣回合。</p><p>AI 仍需填写你自己的 DeepSeek API Key，API 费用由你的账户承担。激活与推进回合需要联网。</p><p>请保留当前浏览器的数据，勿用无痕模式。换设备或清理数据后，请联系卖家处理。</p></div>`);
  $('#activation-form').onsubmit=async event=>{
   event.preventDefault();const input=$('#activation-code'),button=$('.activation-submit'),errorEl=$('#activation-error');
   const code=input.value.trim();if(!code)return;button.disabled=true;button.textContent='正在验证…';errorEl.textContent='';
